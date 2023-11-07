@@ -8,8 +8,10 @@
  year = {2020}
 }
 ## AI code from https://github.com/amosgropp/IGR
-# a short guide for surface reconstruction
-you can change the parameters in reconstruction/setup.conf
+## a short guide for surface reconstruction
+---please first create a folder 'exps' at root, parallel to the folder 'code'
+---If your input pcd has no normal, please read the comments in function load_point_cloud_by_file_extension(file_name), you have to change the code        
+---you can change the parameters in reconstruction/setup.conf
 train{
 input_path: the path of the input img
 d_in:=3 for 3D images and =2 for 2D
@@ -23,7 +25,7 @@ network{
     inputs{
         dims = [ 512, 512, 512, 512, 512, 512, 512, 512 ] : size of CNN layers, according to the paper it can also be changed to 256
         skip_in = [4]: decide which layer is the skip in layer
-        radius_init: radius of the init potato
+        radius_init: radius of the init potato, the center of init potato is always at [0,0,0]
         beta: a param for soft decision
         }
      loss{
@@ -31,9 +33,7 @@ network{
         normals_lambda = 1 : weight in training loss
         }
 
- you can alode change the number of epochs and the batch size in reconstruction/run.py, the arguments at around line 350
- # if pcd without normal
- please read the comments in function load_point_cloud_by_file_extension(file_name), you have to change the code
-        
-        
+ ---you can also change the number of epochs and the batch size in reconstruction/run.py, the arguments at around line 350, note that the batch size must no larger than the point cloud size
+ ---if the conputer has at least one nvidia gpu, you can set the code to use gpu, please see all of the comments mensioned gpu.
+ 
         
